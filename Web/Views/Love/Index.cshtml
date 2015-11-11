@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Love>
+
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="text-center">
+            <img src="~/Content/images/give_love.png" />
+        </div>
+        <ul class="inline-list hatebin-love-list">
+            @foreach (var love in Model)
+            {
+                <li class="hatebin-love-list-item"><a href="~/Love/SendLove/@love.Id">@love.Reason</a></li>
+            }
+        </ul>
+    </div>
+</div>

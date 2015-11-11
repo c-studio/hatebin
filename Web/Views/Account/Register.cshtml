@@ -1,0 +1,46 @@
+﻿@model RegisterViewModel
+
+<div class="row">
+    <div class="medium-12 columns">
+        <h2>Registrera</h2>
+        @if (Model.Errors != null)
+        {
+            <div data-alert class="alert-box alert radius">
+                @Model.Errors
+                <a href="#" class="close">&times;</a>
+            </div>
+        }
+        <form data-abide action="~/Account/Register" method="POST">
+             @Html.AntiForgeryToken()
+            <div class="name-field">
+                <label>
+                    Ditt namn
+                    <input type="text" id="Name" name="Name" required pattern="[a-zA-Z]+" value="@Model.Name">
+                </label>
+                <small class="error">Du måste skriva in ett namn.</small>
+            </div>
+            <div class="email-field">
+                <label>
+                    E-post
+                    <input type="email" id="Email" name="Email" required pattern="email" value="@Model.Email">
+                </label>
+                <small class="error">Du måste fylla i en e-post address.</small>
+            </div>
+            <div class="password-field">
+                <label>
+                    Lösenord
+                    <input id="password" name="Password" type="password" required value="@Model.Password">
+                </label>
+                <small class="error">Du måste fylla i ett lösenord.</small>
+            </div>
+            <div class="password-confirmation-field">
+                <label>
+                    Bekräfta lösenord
+                    <input type="password" required data-equalto="password">
+                </label>
+                <small class="error">Lösenorden måste vara samma.</small>
+            </div>
+            <button type="submit">Registrera</button>
+        </form>
+    </div>
+</div>

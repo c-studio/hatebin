@@ -1,0 +1,33 @@
+﻿@model LoginViewModel
+
+<div class="row">
+    <div class="medium-12 columns">
+        <h2>Logga in</h2>
+        @if (Model.Errors != null)
+        {
+            <div data-alert class="alert-box alert radius">
+                @Model.Errors
+                <a href="#" class="close">&times;</a>
+            </div>
+        }
+        <form data-abide action="~/Account/Login" method="POST">
+            @Html.AntiForgeryToken()
+            <div class="email-field">
+                <label>
+                    E-post
+                    <input type="email" id="Email" name="Email" required pattern="email">
+                </label>
+                <small class="error">Du måste fylla i en e-post address.</small>
+            </div>
+            <div class="password-field">
+                <label>
+                    Lösenord
+                    <input type="password" id="Password" name="Password" required>
+                </label>
+                <small class="error">Du måste fylla i ett lösenord.</small>
+            </div>
+            <button type="submit">Logga in</button>
+        </form>
+        <a href="~/Account/Register">Registrera ny användare.</a>
+    </div>
+</div>

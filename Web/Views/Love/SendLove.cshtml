@@ -1,0 +1,52 @@
+﻿@model SendLoveViewModel
+
+@section scripts {
+    <script src="~/Scripts/sendlove.js"></script>
+}
+
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="text-center">
+            <div>
+                <img src="~/Content/images/give_love.png" />
+            </div>
+            <div>
+                <div class="hatebin-love-reason">@Model.Love.Reason</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" data-equalizer>
+    <div class="medium-4 columns">
+        <div class="text-center hatebin-click-panel" data-equalizer-watch data-item-name="Heart">
+            <img src="~/Content/images/heart.png" />
+        </div>
+    </div>
+    <div class="medium-4 columns">
+        <div class="hatebin-click-panel" data-equalizer-watch data-item-name="Message"> 
+            Kämpa! Du klarar det!
+        </div>
+    </div>
+    <div class="medium-4 columns">
+        <div class="text-center hatebin-click-panel" data-equalizer-watch data-item-name="Catgif">
+            <img src="~/Content/images/sleepwalker.gif" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="text-center hatebin-send-love-button">
+            @if (!Model.Message.IsEmpty())
+            {
+                <p>@Model.Message</p>
+            }
+            <form method="POST">
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="SelectedItem" name="SelectedItem" value="" />
+                <button class="button">Skicka</button>
+            </form>
+        </div>
+    </div>
+</div>

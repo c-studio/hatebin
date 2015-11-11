@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>The Hate Bin</title>
+    <link href="~/Content/css/normalize.css" rel="stylesheet" />
+    <link href="~/Content/css/foundation.min.css" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="row">
+        <div class="medium-3 columns hatebin-header">
+            <a href="~/"><img src="~/Content/images/hatebin_logo_nobg.png" alt="The Hate Bin Logo"></a>
+        </div>
+        <div class="medium-9 columns">
+                <ul class="button-group right">
+                    <li><a href="~/Admin/" class="button">Hat</a></li>
+                    <li><a href="~/Admin/Love" class="button">Kärlek</a></li>
+                    <li><a href="~/Admin/Users" class="button">Användare</a></li>
+                </ul>
+        </div>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="row">
+        <div class="medium-12 columns">
+            <hr />
+            <div class="row">
+                <div class="medium-6 columns">
+                    <p><a href="http://www.tii.se"><img src="~/Content/images/interactive_logo.png" alt="Interactive Institute Logo"></a></p>
+                </div>
+                <div class="medium-6 columns">
+                    <ul class="inline-list right">
+                        <li><a href="~/">Startsida</a></li>
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <li><a href="~/Account/Logout">Logga ut</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Account/Login">Logga in</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/Scripts/Libs/jquery.js"></script>
+    <script src="~/Scripts/Libs/jquery.cookie.js"></script>
+    <script src="~/Scripts/Libs/modernizr.js"></script>
+    <script src="~/Scripts/Libs/fastclick.js"></script>
+    <script src="~/Scripts/Libs/placeholder.js"></script>
+    <script src="~/Scripts/Libs/foundation.min.js"></script>
+    <script src="~/Scripts/Libs/d3.min.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

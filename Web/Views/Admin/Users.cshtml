@@ -1,0 +1,70 @@
+﻿@model UserListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="medium-12 columns">
+        <h2>Användare</h2>
+        <table>
+            <tr>
+                <th>Namn</th>
+                <th>Epost</th>
+                <th>Roller</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var user in Model.UserList)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@string.Join(",", user.Roles)</td>
+                    <td>
+                        <form method="POST">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="UserId" value="@user.Id"/>
+                            <input type="hidden" name="Role" value="Approved"/>
+                            @if (user.Roles.Contains("Approved"))
+                            {
+                                <button type="submit" class="button small hatebin-no-margin">Ta bort godkänd</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="button small hatebin-no-margin">Godkänn</button>
+                            }
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="UserId" value="@user.Id"/>
+                            <input type="hidden" name="Role" value="Admin"/>
+                            @if (user.Roles.Contains("Admin"))
+                            {
+                                <button type="submit" class="button small hatebin-no-margin">Ta bort admin</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="button small hatebin-no-margin">Gör admin</button>
+                            }
+
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+        @if (Model.ShowPrev)
+        {
+            <a href="~/Admin/Users/@Model.UserList.First().Id?dir=1">Föregående Sida</a>
+        }
+        @if (Model.ShowPrev && Model.ShowNext)
+        {
+            <span> | </span>
+        }
+        @if (Model.ShowNext)
+        {
+            <a href="~/Admin/Users/@Model.UserList.Last().Id">Nästa Sida</a>
+        }
+    </div>
+</div>

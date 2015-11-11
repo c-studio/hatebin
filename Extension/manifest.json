@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "The Hate Bin Extension",
+  "version": "0.3",
+  "permissions": [
+      "http://www.hatebin.se/"
+  ],
+  "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://*.twitter.com/*", 
+                "http://*.twitter.com/*"
+            ],
+            "css": [
+                "css/foundation.css",
+                "css/styles.css"
+            ],
+            "js": [
+                "scripts/libs/jquery-2.1.4.min.js", 
+                "scripts/libs/underscore-min.js",
+                "scripts/libs/foundation.min.js",
+                "scripts/content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "images/hatebin_logo.png",
+        "images/hatebin_logo_nobg.png",
+        "images/trash_closed.png", 
+        "images/trash_open.png",  
+        "html/modal.html"
+    ],
+    "externally_connectable": {
+        "matches": ["*://*.hatebin.se/*"]
+    },
+    "background": {
+        "scripts": [
+            "scripts/libs/jquery-2.1.4.min.js",
+            "scripts/background.js"
+        ],
+        "persistent": false
+    }
+}

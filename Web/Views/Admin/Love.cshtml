@@ -1,0 +1,39 @@
+﻿@model LoveListViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="medium-12 columns">
+        <h2>Kärlek</h2>
+        <table>
+            <tr>
+                <th style="min-width: 140px;">Inskickat</th>
+                <th>Epost</th>
+                <th>Varför</th>
+                <th>Skickade</th>
+            </tr>
+            @foreach (var love in Model.LoveList)
+            {
+                <tr>
+                    <td>@love.Created.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td>@love.Email</td>
+                    <td>@love.Reason</td>
+                    <td>@love.Sent</td>
+                </tr>
+            }
+        </table>
+        @if (Model.ShowPrev)
+        {
+            <a href="~/Admin/Love/@Model.LoveList.First().Id?dir=1">Föregående Sida</a>
+        }
+        @if (Model.ShowPrev && Model.ShowNext)
+        {
+            <span> | </span>
+        }
+        @if (Model.ShowNext)
+        {
+            <a href="~/Admin/Love/@Model.LoveList.Last().Id">Nästa Sida</a>
+        }
+    </div>
+</div>

@@ -1,0 +1,73 @@
+.hatebin-logo {
+    position: fixed;
+    background: url('chrome-extension://__MSG_@@extension_id__/images/hatebin_logo.png');
+    bottom: 40px;
+    right: 40px;
+    width: 150px;
+    height: 100px;
+    z-index: 9999;
+    cursor: pointer;    
+}
+
+.trash-open-cursor .tweet {
+    cursor: url('chrome-extension://__MSG_@@extension_id__/images/trash_open.png'), auto;
+}
+
+.trash-closed-cursor {
+    cursor: url('chrome-extension://__MSG_@@extension_id__/images/trash_closed.png'), auto;
+}
+
+.text-center {
+  text-align: center !important; 
+}
+
+.hatebin-modal-logo {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 350px;
+}
+
+.hatebin-tweet-content {
+    margin: 10px 50px 10px 50px;
+    padding: 20px 20px 20px 20px;
+    border: 2px dashed #333333;
+}
+
+.hatebin-button-holder {
+    margin: 20px 0 20px 0;
+}
+
+.hatebin-small-text {
+    font-size: 11px;
+}
+
+.hatebin-type-list {
+    display: inline-block;
+    margin-top: 10px;
+    max-width: 400px;
+    text-align: left;
+}
+
+.hatebin-type-list p {
+    margin: 5px 0 5px 0;
+}
+
+.hatebin-type-list .header {
+    font-weight: 600;
+}
+
+.hatebin-type-list .hatbin-checkbox {
+    margin-right: 10px;
+}
+
+.hatebin-red {
+    color: red;
+}
+
+.hatebin-full-width {
+    width: 100%;
+}
+
+.hatebin-top-margin {
+    margin-top: 10px;
+}

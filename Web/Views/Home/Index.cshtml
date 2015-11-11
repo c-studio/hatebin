@@ -1,0 +1,46 @@
+﻿@section scripts {
+    <script src="~/Scripts/liquidFillGauge.js"></script>
+    <script src="~/Scripts/stats.js"></script>
+}
+
+<div class="row">
+    <div class="medium-12 columns">
+        <div class="text-center">
+            <h4>Antal inlägg slängda i The Hate Bin: <span id="count">0</span></h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-3 columns">
+        <div class="text-center">
+            <h4>Personangrepp</h4>
+        </div>
+        <svg id="fillgaugeAdHominem" width="100%" height="150"></svg>
+    </div>
+    <div class="medium-3 columns">
+        <div class="text-center">
+            <h4>Sexism</h4>
+        </div>
+        <svg id="fillgaugeSexist" width="100%" height="150"></svg>
+    </div>
+    <div class="medium-3 columns">
+        <div class="text-center">
+            <h4>Rasism</h4>
+        </div>
+        <svg id="fillgaugeRacist" width="100%" height="150"></svg>
+    </div>
+    <div class="medium-3 columns">
+        <div class="text-center">
+            <h4>Annat</h4>
+        </div>
+        <svg id="fillgaugeOther" width="100%" height="150"></svg>
+    </div>
+</div>
+
+<div class="row">
+    <div class="medium-12 columns text-center">
+        <hr>
+        <a class="button large" href="https://chrome.google.com/webstore/detail/the-hate-bin-extension/clhpmkfaggdnicadhhambmphcogaahjf">Installera Chrome Extension</a>
+    </div>
+</div>
