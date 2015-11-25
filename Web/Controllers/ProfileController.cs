@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Interactive.HateBin.Controllers.Helpers;
@@ -18,10 +19,11 @@ namespace Interactive.HateBin.Controllers
         public ActionResult Index(int id = 0, PageDirection dir = PageDirection.Forward)
         {
             var currentUser = userRepository.GetByEmail(HttpContext.User.Identity.Name);
-            Guid? token = currentUser.Token;
-            if (token.Value == Guid.Empty) token = null;
-            var myhate = hateRepository.GetList(id, PageSize + 1, dir, token).ToList();
-
+            var myhate = new List<Hate>();
+            if (currentUser.Token != Guid.Empty)
+            {
+                myhate = hateRepository.GetList(id, PageSize + 1, dir, currentUser.Token).ToList();
+            }
             return View(new HateListViewModel
             {
                 HateList = myhate.Take(PageSize).OrderByDescending(x => x.Id).ToList(),

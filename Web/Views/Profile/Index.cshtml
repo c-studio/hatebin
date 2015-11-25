@@ -26,7 +26,7 @@
         </table>
         @if (Model.ShowPrev)
         {
-            <a href="~/Admin/Index/@Model.HateList.First().Id?dir=1">Föregående Sida</a>
+            <a href="~/Profile/Index/@Model.HateList.First().Id?dir=1">Föregående Sida</a>
         }
         @if (Model.ShowPrev && Model.ShowNext)
         {
@@ -34,7 +34,7 @@
         }
         @if (Model.ShowNext)
         {
-            <a href="~/Admin/Index/@Model.HateList.Last().Id">Nästa Sida</a>
+            <a href="~/Profile/Index/@Model.HateList.Last().Id">Nästa Sida</a>
         }
     </div>
 </div>
