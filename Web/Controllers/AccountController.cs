@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Newtonsoft.Json;
 
 namespace Interactive.HateBin.Controllers
 {
@@ -78,6 +79,17 @@ namespace Interactive.HateBin.Controllers
             return View(model);
         }
 
+        public ActionResult Token()
+        {
+            var currentUser = repository.GetByEmail(HttpContext.User.Identity.Name);
+            if (currentUser.Token == Guid.Empty)
+            {
+                currentUser.Token = Guid.NewGuid();
+                repository.Save(currentUser);
+            } 
+            return Content(JsonConvert.SerializeObject(new UserData { Name = currentUser.Name, Token = currentUser.Token}), "application/json");
+        }
+
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
@@ -86,8 +98,9 @@ namespace Interactive.HateBin.Controllers
 
         private void SetAuthCookie(User user)
         {
-            var authTicket = new FormsAuthenticationTicket(1, user.Email, DateTime.Now, DateTime.Now.AddDays(365), true, string.Join(",", user.Roles));
+            var authTicket = new FormsAuthenticationTicket(1, user.Email, DateTime.Now, DateTime.Now.AddYears(1), true, string.Join(",", user.Roles));
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(authTicket));
+            cookie.Expires = DateTime.Now.AddYears(1);
             Response.Cookies.Add(cookie);
         }
     }

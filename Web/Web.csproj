@@ -153,6 +153,8 @@
     <Compile Include="Controllers\Api\HateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\LoveController.cs" />
+    <Compile Include="Controllers\Helpers\PagingHelper.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Data\HateRepository.cs" />
     <Compile Include="Data\LoveRepository.cs" />
     <Compile Include="Data\UserRepository.cs" />
@@ -231,6 +233,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\Love.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

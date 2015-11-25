@@ -32,6 +32,10 @@
                 <div class="medium-6 columns">
                     <ul class="inline-list right">
                         <li><a href="~/">Startsida</a></li>
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <li><a href="~/Profile">Mitt hat</a></li>
+                        }
                         <li><a href="~/Love">Ge nätkärlek</a></li>
                         <li><a href="~/Home/About">Om</a></li>
                         @if (Context.User.IsInRole("Admin"))

@@ -17,14 +17,15 @@ namespace Interactive.HateBin.Data
                 conn.Open();
                 var transaction = conn.BeginTransaction();
 
-                var command = new MySqlCommand("INSERT INTO users (id, name, email, password, roles) VALUES (@Id, @Name, @Email, @Password, @Roles) " +
-                                               "ON DUPLICATE KEY UPDATE name=VALUES(name), email=VALUES(email), password=VALUES(password), roles=VALUES(roles);", conn, transaction);
+                var command = new MySqlCommand("INSERT INTO users (id, name, email, password, roles, token) VALUES (@Id, @Name, @Email, @Password, @Roles, @Token) " +
+                                               "ON DUPLICATE KEY UPDATE name=VALUES(name), email=VALUES(email), password=VALUES(password), roles=VALUES(roles), token=VALUES(token);", conn, transaction);
 
                 command.Parameters.AddWithValue("@Id", item.Id);
                 command.Parameters.AddWithValue("@Name", item.Name);
                 command.Parameters.AddWithValue("@Email", item.Email);
                 command.Parameters.AddWithValue("@Password", item.Password);
                 command.Parameters.AddWithValue("@Roles", string.Join(",", item.Roles));
+                command.Parameters.AddWithValue("@Token", item.Token);
                 command.ExecuteNonQuery();
 
                 if (item.Id == 0)
@@ -51,14 +52,7 @@ namespace Interactive.HateBin.Data
                 {
                     if (reader.Read())
                     {
-                        result = new User
-                        {
-                            Id = reader.GetInt32("id"),
-                            Name = reader.GetString("name"),
-                            Email = reader.GetString("email"),
-                            Password = reader.GetString("password"),
-                            Roles = reader.GetString("roles").Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList()
-                        };
+                        result = ParseUser(reader);
                     }
                     else
                     {
@@ -81,14 +75,30 @@ namespace Interactive.HateBin.Data
                 {
                     if (reader.Read())
                     {
-                        result = new User
-                        {
-                            Id = reader.GetInt32("id"),
-                            Name = reader.GetString("name"),
-                            Email = reader.GetString("email"),
-                            Password = reader.GetString("password"),
-                            Roles = reader.GetString("roles").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList()
-                        };
+                        result = ParseUser(reader);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            return result;
+        }
+
+        public User GetByToken(Guid token)
+        {
+            User result = null;
+            using (var conn = Connection)
+            {
+                conn.Open();
+                var command = new MySqlCommand("SELECT * FROM users WHERE token=@Token", conn);
+                command.Parameters.AddWithValue("@Token", token);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        result = ParseUser(reader);
                     }
                     else
                     {
@@ -127,24 +137,29 @@ namespace Interactive.HateBin.Data
                     }
                 }
 
-
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var item = new User
-                        {
-                            Id = reader.GetInt32("id"),
-                            Name = reader.GetString("name"),
-                            Email = reader.GetString("email"),
-                            Password = reader.GetString("password"),
-                            Roles = reader.GetString("roles").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList()
-                        };
+                        var item = ParseUser(reader);
                         result.Add(item);
                     }
                 }
             }
             return result;
+        }
+
+        private static User ParseUser(MySqlDataReader reader)
+        {
+            return new User
+            {
+                Id = reader.GetInt32("id"),
+                Name = reader.GetString("name"),
+                Email = reader.GetString("email"),
+                Password = reader.GetString("password"),
+                Roles = reader.GetString("roles").Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList(),
+                Token = reader.GetGuid("token")
+            };
         } 
     }
 }

@@ -1,3 +1,11 @@
+.trash-closed-cursor, .trash-closed-cursor * {
+    cursor: url('chrome-extension://__MSG_@@extension_id__/images/trash_closed.png'), auto !important;
+}
+
+.trash-open-cursor .tweet, .trash-open-cursor .tweet * {
+    cursor: url('chrome-extension://__MSG_@@extension_id__/images/trash_open.png'), auto !important;
+}
+
 .hatebin-logo {
     position: fixed;
     background: url('chrome-extension://__MSG_@@extension_id__/images/hatebin_logo.png');
@@ -9,22 +17,15 @@
     cursor: pointer;    
 }
 
-.trash-open-cursor .tweet {
-    cursor: url('chrome-extension://__MSG_@@extension_id__/images/trash_open.png'), auto;
-}
-
-.trash-closed-cursor {
-    cursor: url('chrome-extension://__MSG_@@extension_id__/images/trash_closed.png'), auto;
-}
-
-.text-center {
-  text-align: center !important; 
+.hatebin-text-center {
+  text-align: center !important;
+  margin-bottom: 10px; 
 }
 
 .hatebin-modal-logo {
     margin-top: 10px;
     margin-bottom: 10px;
-    max-width: 350px;
+    max-width: 250px;
 }
 
 .hatebin-tweet-content {
@@ -34,7 +35,7 @@
 }
 
 .hatebin-button-holder {
-    margin: 20px 0 20px 0;
+    margin: 20px 0 15px 0;
 }
 
 .hatebin-small-text {
@@ -70,4 +71,8 @@
 
 .hatebin-top-margin {
     margin-top: 10px;
+}
+
+.hatebin-hidden {
+    display: none !important;
 }

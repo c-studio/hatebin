@@ -2,6 +2,12 @@
 
 namespace Interactive.HateBin.Models
 {
+    public class IncomingLove
+    {
+        public Guid Token { get; set; }
+        public string Reason { get; set; }
+    }
+
     public class Love
     {
         public int Id { get; set; }

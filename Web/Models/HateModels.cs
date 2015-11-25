@@ -9,8 +9,10 @@ namespace Interactive.HateBin.Models
         public DateTime Created { get; set; }
         public string Network { get; set; }
         public long NetworkId { get; set; }
+        public string Author { get; set; }
         public string Text { get; set; }
         public IList<string> Categories { get; set; }
+        public Guid Token { get; set; }
     }
 
     public class HateStats

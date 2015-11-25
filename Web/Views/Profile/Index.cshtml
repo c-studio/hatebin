@@ -1,0 +1,40 @@
+﻿@model HateListViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<div class="row">
+    <div class="medium-12 columns">
+        <h2>Mitt hat</h2>
+        <table>
+            <tr>
+                <th style="min-width: 140px;">Inskickat</th>
+                <th>Nätverk</th>
+                <th>Text</th>
+                <th style="min-width: 140px;">Kategorier</th>
+            </tr>
+            @foreach (var hate in Model.HateList)
+            {
+                <tr>
+                    <td>@hate.Created.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td>@hate.Network</td>
+                    <td>@hate.Text</td>
+                    <td>@string.Join(", ", hate.Categories)</td>
+                </tr>
+            }
+        </table>
+        @if (Model.ShowPrev)
+        {
+            <a href="~/Admin/Index/@Model.HateList.First().Id?dir=1">Föregående Sida</a>
+        }
+        @if (Model.ShowPrev && Model.ShowNext)
+        {
+            <span> | </span>
+        }
+        @if (Model.ShowNext)
+        {
+            <a href="~/Admin/Index/@Model.HateList.Last().Id">Nästa Sida</a>
+        }
+    </div>
+</div>

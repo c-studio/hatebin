@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 
 namespace Interactive.HateBin.Data
 {
@@ -19,12 +20,14 @@ namespace Interactive.HateBin.Data
 
                 var transaction = conn.BeginTransaction();
 
-                var command = new MySqlCommand("INSERT INTO hate (created, network, networkId, text) VALUES (@Created, @Network, @NetworkId, @Text);", conn, transaction);
+                var command = new MySqlCommand("INSERT INTO hate (created, network, networkId, author, text, token) VALUES (@Created, @Network, @NetworkId, @Author, @Text, @Token);", conn, transaction);
 
                 command.Parameters.AddWithValue("@Created", item.Created);
                 command.Parameters.AddWithValue("@Network", item.Network);
                 command.Parameters.AddWithValue("@NetworkId", item.NetworkId);
+                command.Parameters.AddWithValue("@Author", item.Author);
                 command.Parameters.AddWithValue("@Text", item.Text);
+                command.Parameters.AddWithValue("@Token", item.Token);
                 command.ExecuteNonQuery();
 
                 var idCommand = new MySqlCommand("SELECT LAST_INSERT_ID();", conn, transaction);
@@ -56,14 +59,7 @@ namespace Interactive.HateBin.Data
                 {
                     if (reader.Read())
                     {
-                        result = new Hate
-                        {
-                            Id = id,
-                            Created = reader.GetDateTime("created"),
-                            Network = reader.GetString("network"),
-                            NetworkId = reader.GetInt64("networkId"),
-                            Text = reader.GetString("text"),
-                        };
+                        result = ParseHate(reader);
                     }
                     else
                     {
@@ -98,7 +94,7 @@ namespace Interactive.HateBin.Data
             }
         }
 
-        public IEnumerable<Hate> GetList(int id = 0,  int count = 21, PageDirection direction = PageDirection.Forward)
+        public IEnumerable<Hate> GetList(int id = 0,  int count = 21, PageDirection direction = PageDirection.Forward, Guid? token = null)
         {
             var result = new List<Hate>();
             using (var conn = Connection)
@@ -108,22 +104,30 @@ namespace Interactive.HateBin.Data
                 MySqlCommand command;
                 if(id == 0)
                 {
-                    command = new MySqlCommand("SELECT * FROM hate ORDER BY Id DESC LIMIT @Count", conn);
+                    var whereClause = "";
+                    if (token.HasValue) whereClause = "WHERE token = @Token";
+                    command = new MySqlCommand($"SELECT * FROM hate {whereClause} ORDER BY Id DESC LIMIT @Count", conn);
                     command.Parameters.AddWithValue("@Count", count);
+                    if (token.HasValue) command.Parameters.AddWithValue("@Token", token.Value);
                 }
                 else
                 {
+                    var extendedWhere = "";
+                    if (token.HasValue) extendedWhere = "AND token = @Token";
+
                     if (direction == PageDirection.Forward)
                     {
-                        command = new MySqlCommand("SELECT * FROM hate WHERE id < @Id ORDER BY Id DESC LIMIT @Count", conn);
+                        command = new MySqlCommand($"SELECT * FROM hate WHERE id < @Id {extendedWhere}  ORDER BY Id DESC LIMIT @Count", conn);
                         command.Parameters.AddWithValue("@Id", id);
                         command.Parameters.AddWithValue("@Count", count);
+                        if (token.HasValue) command.Parameters.AddWithValue("@Token", token.Value);
                     }
                     else
                     {
-                        command = new MySqlCommand("SELECT * FROM hate WHERE id > @Id ORDER BY Id ASC LIMIT @Count", conn);
+                        command = new MySqlCommand($"SELECT * FROM hate WHERE id > @Id {extendedWhere} ORDER BY Id ASC LIMIT @Count", conn);
                         command.Parameters.AddWithValue("@Id", id);
                         command.Parameters.AddWithValue("@Count", count);
+                        if (token.HasValue) command.Parameters.AddWithValue("@Token", token.Value);
                     }
                 }
 
@@ -131,14 +135,7 @@ namespace Interactive.HateBin.Data
                 {
                     while (reader.Read())
                     {
-                        var item = new Hate
-                        {
-                            Id = reader.GetInt32("id"),
-                            Created = reader.GetDateTime("created"),
-                            Network = reader.GetString("network"),
-                            NetworkId = reader.GetInt64("networkId"),
-                            Text = reader.GetString("text"),
-                        };
+                        var item = ParseHate(reader);
                         result.Add(item);
                     }
                 }
@@ -187,6 +184,20 @@ namespace Interactive.HateBin.Data
                     return null;
                 }
             }
+        }
+
+        private static Hate ParseHate(MySqlDataReader reader)
+        {
+            return new Hate
+            {
+                Id = reader.GetInt32("id"),
+                Created = reader.GetDateTime("created"),
+                Network = reader.GetString("network"),
+                NetworkId = reader.GetInt64("networkId"),
+                Author = reader.GetString("author"),
+                Text = reader.GetString("text"),
+                Token = reader.GetGuid("token")
+            };
         }
     }
 }

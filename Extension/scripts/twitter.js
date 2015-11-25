@@ -8,13 +8,31 @@ $(function() {
     }
 
     $("body").append('<div class="hatebin-logo"></div>');
+
+    var userdata = null;
+    
+    var checkloginstatus = function() {
+        chrome.runtime.sendMessage({type: "get", key: "userdata"}, function(response){
+            if(response.userdata !== undefined){
+                userdata = JSON.parse(response.userdata);
+                $("#hatebin-netlove-container").removeClass("hatebin-hidden");
+                $("#hatebin-loggedin").removeClass("hatebin-hidden");
+                $("#hatebin-loggedout").addClass("hatebin-hidden");
+            } else {
+                userdata = null;
+                $("#hatebin-netlove-container").addClass("hatebin-hidden");
+                $("#hatebin-loggedin").addClass("hatebin-hidden");
+                $("#hatebin-loggedout").removeClass("hatebin-hidden");
+            }
+        });
+        setTimeout(checkloginstatus, 10000);
+    }
+     
+    checkloginstatus();
          
     $.get(chrome.extension.getURL('html/modal.html'), function(data) {
         $($.parseHTML(data)).appendTo('body');
-        
-       appendImage("images/hatebin_logo_nobg.png", "hatebin-modal-logo", "logoImageHolder1")
-       appendImage("images/hatebin_logo_nobg.png", "hatebin-modal-logo", "logoImageHolder2")  
-        
+       appendImage("images/hatebin_logo_nobg.png", "hatebin-modal-logo", "logoImageHolder1");
         $(".close-reveal-modal").on("click", function() {
             $('#hatebinModalFirst').foundation('reveal', 'close');
         });       
@@ -23,12 +41,14 @@ $(function() {
     var clickHandlerActive = false;
     
     var tweetClickHandler = function(tweetClickEvent) {
-        
+                                     
+        var id = $(tweetClickEvent.currentTarget).data("item-id"); 
         var tweetData = {
-            id: $(tweetClickEvent.currentTarget).data("item-id"),
+            id: id,
+            author: $("[data-item-id='"+id+"']", tweetClickEvent.currentTarget).data("screen-name"),
             text: $(".tweet-text", tweetClickEvent.currentTarget).text()
         }
-               
+                             
         $("[data-item-type='tweet']").removeClass("trash-open-cursor ").off("click", tweetClickHandler);
         $("body").removeClass("trash-closed-cursor");
         clickHandlerActive = false;
@@ -39,63 +59,63 @@ $(function() {
         $("#checkbox-sexist").prop('checked', false);
         $("#checkbox-racist").prop('checked', false);
         $("#checkbox-other-hate").prop('checked', false);
-        $('#input-other-hate').val('');
-        $('#input-love-e-mail').val('');
-        $('#input-love-reason').val('');
+        $("#checkbox-netlove").prop('checked', false);
+        $("#input-other-hate").val("");
+        $("#input-love-e-mail").val("");
+        $("#input-love-reason").val("");
+        $("input-netlove-reason").val("")
                  
         $(".hatebin-tweet-content").text(tweetData.text);
                 
         $("#hatebinThrowButton").off();
         $("#hatebinThrowButton").on("click", function() {
             $(tweetClickEvent.currentTarget).remove();
-            $('#hatebinModalSecond').foundation('reveal', 'open');  
-            
-            var data = {
+            $('#hatebinModalFirst').foundation('reveal', 'close');
+                              
+            var hateData = {
                 network: "Twitter",
                 networkId: tweetData.id,
+                author: tweetData.author,
                 text: tweetData.text,
-                categories: []
+                categories: [],
+                token: null
+            }
+            
+            if(userdata !== null) {
+                hateData.token = userdata.Token;
             }
             
             if($("#checkbox-ad-hominem").is(':checked')) {
-                data.categories.push("Ad Hominem")
+                hateData.categories.push("Ad Hominem")
             }            
             if($("#checkbox-sexist").is(':checked')) {
-                data.categories.push("Sexist")
+                hateData.categories.push("Sexist")
             }
             if($("#checkbox-racist").is(':checked')) {
-                data.categories.push("Racist")
+                hateData.categories.push("Racist")
             }
             var otherReason = $('#input-other-hate').val();
             if($("#checkbox-other-hate").is(':checked') && otherReason.length > 0) {
-                data.categories.push(otherReason);
+                hateData.categories.push(otherReason);
             }
 
             chrome.runtime.sendMessage({ 
                 type: "hate",
-                data: JSON.stringify(data)
+                data: JSON.stringify(hateData)
             });
-        });
-        
-        $("#hatebinSaveButton").off();
-        $("#hatebinSaveButton").on("click", function() {
-             $('#hatebinModalSecond').foundation('reveal', 'close');
-                 
-            var loveEmail =  $('#input-love-e-mail').val();
-            var loveReason = $('#input-love-reason').val();
-                    
-            if(loveEmail.length > 0 && loveReason.length > 0) {  
-                var data = {
-                    email: loveEmail,
+            
+            var loveReason = $('#input-netlove-reason').val();
+            if(userdata !== null && $("#checkbox-netlove").is(':checked') && loveReason.length > 0) {
+                var loveData = {
+                    token: userdata.Token,
                     reason: loveReason
-                }
-
+                }               
                 chrome.runtime.sendMessage({ 
                     type: "love",
-                    data: JSON.stringify(data)
+                    data: JSON.stringify(loveData)
                 });
-            }                 
-        });      
+            }
+        });            
     }   
     
     $(".hatebin-logo").click(function(){       

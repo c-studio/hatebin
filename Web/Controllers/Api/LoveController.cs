@@ -8,12 +8,18 @@ namespace Interactive.HateBin.Controllers.Api
 {
     public class LoveController : ApiController
     {
-        private LoveRepository repository => new LoveRepository();
+        private LoveRepository loveRepository => new LoveRepository();
+        private UserRepository userRepository => new UserRepository();
 
-        public HttpResponseMessage Post(Love item)
+        public HttpResponseMessage Post(IncomingLove item)
         {
-            item = repository.Save(item);
-            return Request.CreateResponse(HttpStatusCode.Created, item);
+            var user = userRepository.GetByToken(item.Token);
+            if (user != null)
+            {
+                var loveitem = loveRepository.Save(new Love { Email = user.Email, Reason = item.Reason });
+                return Request.CreateResponse(HttpStatusCode.Created, loveitem);
+            }
+            return Request.CreateResponse(HttpStatusCode.BadRequest, "No user with supplied token.");
         }
     }
 }

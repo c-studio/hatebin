@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Interactive.HateBin.Models
 {
@@ -24,5 +25,12 @@ namespace Interactive.HateBin.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public List<string> Roles { get; set; }
+        public Guid Token { get; set; }
+    }
+
+    public class UserData
+    {
+        public string Name { get; set; }
+        public Guid Token { get; set; }
     }
 }

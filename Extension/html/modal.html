@@ -1,5 +1,5 @@
 <div id="hatebinModalFirst" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
-    <div class="text-center">
+    <div class="hatebin-text-center">
         <p class="hatebin-tweet-content"><p/>
         <p>Jag vill slänga det här i</p>
         <p id="logoImageHolder1"></p>
@@ -9,32 +9,19 @@
             <p><input id="checkbox-ad-hominem" type="checkbox" class="hatbin-checkbox">Det är ett personangrepp </p>
             <p><input id="checkbox-sexist" type="checkbox" class="hatbin-checkbox">Det är sexistiskt</p>
             <p><input id="checkbox-racist" type="checkbox" class="hatbin-checkbox">Det är rasistiskt</p>
-            <p><input id="checkbox-other-hate" type="checkbox" class="hatbin-checkbox">Annat <input id="input-other-hate" type="text" /></p>
+            <p><input id="checkbox-other-hate" type="checkbox" class="hatbin-checkbox">Annat: <input id="input-other-hate" type="text" /></p>
+            <div id="hatebin-netlove-container" class="hatebin-hidden">
+                <p class="header">Jag vill ha lite nätkärlek!</p>
+                <p><input id="checkbox-netlove" type="checkbox" class="hatbin-checkbox">Anledning: <input id="input-netlove-reason" type="text" /></p>
+            </div>
         </div>        
         <p class="hatebin-button-holder"><button id="hatebinThrowButton" class="button large radius">Släng</button></p>
+        <p id="hatebin-loggedin" class="hatebin-small-text hatebin-hidden">Du är inloggad som <span id="hatebin-name-span">Daniel Eriksson</span>, din historik kommer att sparas på  <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a></p>
+        <p id="hatebin-loggedout" class="hatebin-small-text hatebin-hidden">
+            Du är inte inloggad på <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a>, det du slänger kommer att sparas anonymt.
+        </p>            
     </div>
     <p class="hatebin-small-text">The Hate Bin är ett verktyg utvecklat av Interactive Institute Swedish ICT. Vi är ett experimentellt forskningsinstitut inom IT och design. 
-    När du använder The Hate Bin bidrar du till vår forskning och utveckling av internet till en plats för alla. Läs mer på <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a></p>
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-</div>
-
-<div id="hatebinModalSecond" class="reveal-modal" data-reveal aria-hidden="true" role="dialog">
-    <div class="text-center">
-        <p>Tack för att du använder</p>
-        <p id="logoImageHolder2"></p>
-        <div class="hatebin-type-list">
-            <p>Jag behöver lite nätkärlek<span class="hatebin-red">*</span> ...</p>
-            <p class="left">... till min e-post <input id="input-love-e-mail" type="text" /></p>
-            <p class="hatebin-top-margin">Berätta varför du behöver nätkärlek:</p>
-            <p><input id="input-love-reason" type="text" class="hatebin-full-width" /></p>              
-       </div>
-       <p class="hatebin-top-margin">Ge nätkärlek till andra som behöver det på</p>
-       <p><a href="http://www.hatebin.se">www.hatebin.se</a></p>
-        <p class="hatebin-button-holder"><button id="hatebinSaveButton" class="button radius">Spara</button></p>
-    </div>
-    <p class="hatebin-small-text"><span class="hatebin-red">*</span> The Hate Bin förmedlar nätkärlek mellan användare anonymt. Du får kärlek skickad till din inkorg om du känner att du behöver pepp. 
-    Du kan skicka nätkärlek anonymt via The Hate Bin till andra som drabbats av näthat.</p>
-    <p class="hatebin-small-text hatebin-top-margin">The Hate Bin är ett verktyg utvecklat av Interactive Institute Swedish ICT. Vi är ett experimentellt forskningsinstitut inom IT och design. 
     När du använder The Hate Bin bidrar du till vår forskning och utveckling av internet till en plats för alla. Läs mer på <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a></p>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

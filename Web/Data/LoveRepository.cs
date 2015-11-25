@@ -57,16 +57,7 @@ namespace Interactive.HateBin.Data
 
                 if (reader.Read())
                 {
-                    var item = new Love
-                    {
-                        Id = reader.GetInt32("id"),
-                        Created = reader.GetDateTime("created"),
-                        Updated = reader.GetDateTime("updated"),
-                        Email = reader.GetString("email"),
-                        Reason = reader.GetString("reason"),
-                        Sent = reader.GetInt32("sent")
-                    };
-
+                    var item = ParseLove(reader);
                     return item;
                 }
                 return null;
@@ -94,15 +85,7 @@ namespace Interactive.HateBin.Data
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var item = new Love
-                    {
-                        Id = reader.GetInt32("id"),
-                        Created = reader.GetDateTime("created"),
-                        Updated = reader.GetDateTime("updated"),
-                        Email = reader.GetString("email"),
-                        Reason = reader.GetString("reason"),
-                        Sent = reader.GetInt32("sent")
-                    };
+                    var item = ParseLove(reader);
                     result.Add(item);
                 }
             }
@@ -141,19 +124,24 @@ namespace Interactive.HateBin.Data
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    var item = new Love
-                    {
-                        Id = reader.GetInt32("id"),
-                        Created = reader.GetDateTime("created"),
-                        Updated = reader.GetDateTime("updated"),
-                        Email = reader.GetString("email"),
-                        Reason = reader.GetString("reason"),
-                        Sent = reader.GetInt32("sent")
-                    };
+                    var item = ParseLove(reader);
                     result.Add(item);
                 }
             }
             return result;
+        }
+
+        private static Love ParseLove(MySqlDataReader reader)
+        {
+            return new Love
+            {
+                Id = reader.GetInt32("id"),
+                Created = reader.GetDateTime("created"),
+                Updated = reader.GetDateTime("updated"),
+                Email = reader.GetString("email"),
+                Reason = reader.GetString("reason"),
+                Sent = reader.GetInt32("sent")
+            };
         }
     }
 }
