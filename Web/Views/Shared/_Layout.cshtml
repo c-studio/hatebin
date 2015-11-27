@@ -5,6 +5,7 @@
     <title>The Hate Bin</title>
     <link href="~/Content/css/normalize.css" rel="stylesheet" />
     <link href="~/Content/css/foundation.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/css/main.css" rel="stylesheet" />
 </head>
 <body>
@@ -34,7 +35,7 @@
                         <li><a href="~/">Startsida</a></li>
                         @if (Context.User.Identity.IsAuthenticated)
                         {
-                            <li><a href="~/Profile">Mitt hat</a></li>
+                            <li><a href="~/Profile">Min Sida</a></li>
                         }
                         <li><a href="~/Love">Ge nätkärlek</a></li>
                         <li><a href="~/Home/About">Om</a></li>

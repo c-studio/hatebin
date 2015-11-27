@@ -16,7 +16,7 @@
             @foreach (var love in Model.LoveList)
             {
                 <tr>
-                    <td>@love.Created.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td>@love.Created.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@love.Email</td>
                     <td>@love.Reason</td>
                     <td>@love.Sent</td>
@@ -25,7 +25,7 @@
         </table>
         @if (Model.ShowPrev)
         {
-            <a href="~/Admin/Love/@Model.LoveList.First().Id?dir=1">Föregående Sida</a>
+            <a href="~/Admin/Love?loveid=@Model.LoveList.First().Id?dir=1">Föregående Sida</a>
         }
         @if (Model.ShowPrev && Model.ShowNext)
         {
@@ -33,7 +33,7 @@
         }
         @if (Model.ShowNext)
         {
-            <a href="~/Admin/Love/@Model.LoveList.Last().Id">Nästa Sida</a>
+            <a href="~/Admin/Love?loveid=@Model.LoveList.Last().Id">Nästa Sida</a>
         }
     </div>
 </div>

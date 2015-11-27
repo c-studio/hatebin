@@ -1,5 +1,5 @@
-var url = "http://www.hatebin.se";
-//var url = "http://localhost/hatebin";
+//var url = "http://www.hatebin.se";
+var url = "http://localhost/hatebin";
 
 chrome.runtime.onMessage.addListener(function(request, sender, callback) {
    //console.log(request);  

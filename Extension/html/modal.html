@@ -6,17 +6,17 @@
         <p>Det kommer inte att visas upp igen, men bidra till forskning och utveckling av internet och digital kommunikation.</p>
         <div class="hatebin-type-list">
             <p class="header">På vilket sätt anser du att det här är näthat?</p>
-            <p><input id="checkbox-ad-hominem" type="checkbox" class="hatbin-checkbox">Det är ett personangrepp </p>
-            <p><input id="checkbox-sexist" type="checkbox" class="hatbin-checkbox">Det är sexistiskt</p>
-            <p><input id="checkbox-racist" type="checkbox" class="hatbin-checkbox">Det är rasistiskt</p>
-            <p><input id="checkbox-other-hate" type="checkbox" class="hatbin-checkbox">Annat: <input id="input-other-hate" type="text" /></p>
+            <p><input id="checkbox-ad-hominem" name="checkbox-ad-hominem" type="checkbox" class="hatbin-checkbox"><label for="checkbox-ad-hominem">Det är ett personangrepp</label></p>
+            <p><input id="checkbox-sexist" name="checkbox-sexist" type="checkbox" class="hatbin-checkbox"><label for="checkbox-sexist">Det är sexistiskt</label></p>
+            <p><input id="checkbox-racist" name="checkbox-racist" type="checkbox" class="hatbin-checkbox"><label for="checkbox-racist">Det är rasistiskt</label></p>
+            <p><input id="checkbox-other-hate" name=""checkbox-other-hate"" type="checkbox" class="hatbin-checkbox"><label for="checkbox-other-hate">Annat: </label><input id="input-other-hate" type="text" /></p>
             <div id="hatebin-netlove-container" class="hatebin-hidden">
                 <p class="header">Jag vill ha lite nätkärlek!</p>
-                <p><input id="checkbox-netlove" type="checkbox" class="hatbin-checkbox">Anledning: <input id="input-netlove-reason" type="text" /></p>
+                <p><input id="checkbox-netlove" name="checkbox-netlove" type="checkbox" class="hatbin-checkbox"><label for="checkbox-netlove">Anledning: </label><input id="input-netlove-reason" type="text" /></p>
             </div>
         </div>        
         <p class="hatebin-button-holder"><button id="hatebinThrowButton" class="button large radius">Släng</button></p>
-        <p id="hatebin-loggedin" class="hatebin-small-text hatebin-hidden">Du är inloggad som <span id="hatebin-name-span">Daniel Eriksson</span>, din historik kommer att sparas på  <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a></p>
+        <p id="hatebin-loggedin" class="hatebin-small-text hatebin-hidden">Du är inloggad som <span id="hatebin-name-span"></span>, din historik kommer att sparas på  <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a></p>
         <p id="hatebin-loggedout" class="hatebin-small-text hatebin-hidden">
             Du är inte inloggad på <a class="hatebin-red" href="http://www.hatebin.se">www.hatebin.se</a>, det du slänger kommer att sparas anonymt.
         </p>            

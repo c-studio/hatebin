@@ -14,20 +14,20 @@ namespace Interactive.HateBin.Controllers
         private UserRepository userRepository => new UserRepository();
         private HateRepository hateRepository => new HateRepository();
 
-        private const int PageSize = 20;
+        private const int PageSize = 15;
 
-        public ActionResult Index(int id = 0, PageDirection dir = PageDirection.Forward)
+        public ActionResult Index(int hateid = 0, PageDirection dir = PageDirection.Forward)
         {
             var currentUser = userRepository.GetByEmail(HttpContext.User.Identity.Name);
             var myhate = new List<Hate>();
             if (currentUser.Token != Guid.Empty)
             {
-                myhate = hateRepository.GetList(id, PageSize + 1, dir, currentUser.Token).ToList();
+                myhate = hateRepository.GetList(hateid, PageSize + 1, dir, currentUser.Token).ToList();
             }
             return View(new HateListViewModel
             {
                 HateList = myhate.Take(PageSize).OrderByDescending(x => x.Id).ToList(),
-                ShowPrev = PagingHelper.ShowPrev(id, myhate, dir, PageSize),
+                ShowPrev = PagingHelper.ShowPrev(hateid, myhate, dir, PageSize),
                 ShowNext = PagingHelper.ShowNext(myhate, dir, PageSize)
             });
         }

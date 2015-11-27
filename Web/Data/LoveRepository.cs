@@ -81,7 +81,7 @@ namespace Interactive.HateBin.Data
             using (var conn = Connection)
             {
                 conn.Open();
-                var command = new MySqlCommand("SELECT * FROM love WHERE sent <= 5;" , conn);
+                var command = new MySqlCommand("SELECT * FROM love WHERE sent < 3;" , conn);
                 var reader = command.ExecuteReader();
                 while (reader.Read())
                 {

@@ -10,22 +10,32 @@
             <tr>
                 <th style="min-width: 140px;">Inskickat</th>
                 <th>Nätverk</th>
+                <th>Författare</th>
                 <th>Text</th>
                 <th style="min-width: 140px;">Kategorier</th>
+                <th></th>
             </tr>
             @foreach (var hate in Model.HateList)
             {
                 <tr>
-                    <td>@hate.Created.ToString("yyyy-MM-dd hh:mm")</td>
+                    <td>@hate.Created.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@hate.Network</td>
+                    <td>@hate.Author</td>
                     <td>@hate.Text</td>
                     <td>@string.Join(", ", hate.Categories)</td>
+                    <td>
+                        <form method="POST" onsubmit="return confirm('Är du säker?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="DeleteId" value="@hate.Id"/>
+                            <button type="submit" class="button small hatebin-no-margin"><i class="fa fa-trash-o"></i></button>
+                        </form>
+                    </td>
                 </tr>
             }
         </table>
         @if (Model.ShowPrev)
         {
-            <a href="~/Admin/Index/@Model.HateList.First().Id?dir=1">Föregående Sida</a>
+            <a href="~/Admin?hateid=@Model.PrevId?dir=1">Föregående Sida</a>
         }
         @if (Model.ShowPrev && Model.ShowNext)
         {
@@ -33,7 +43,7 @@
         }
         @if (Model.ShowNext)
         {
-            <a href="~/Admin/Index/@Model.HateList.Last().Id">Nästa Sida</a>
+            <a href="~/Admin?hateid=@Model.NextId">Nästa Sida</a>
         }
     </div>
 </div>

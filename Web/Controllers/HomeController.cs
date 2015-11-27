@@ -2,9 +2,9 @@
 
 namespace Interactive.HateBin.Controllers
 {
-    [Authorize(Roles = "Approved")]
     public class HomeController : Controller
     {
+        [Authorize(Roles = "Approved")]
         public ActionResult Index()
         {                 
             return View();

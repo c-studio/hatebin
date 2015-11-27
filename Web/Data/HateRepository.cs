@@ -157,6 +157,26 @@ namespace Interactive.HateBin.Data
             return result;
         }
 
+        public void DeleteHate(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                var transaction = conn.BeginTransaction();
+
+                var commandCategories = new MySqlCommand("DELETE FROM `hate-categories` WHERE hateid = @Id", conn, transaction);
+                commandCategories.Parameters.AddWithValue("@Id", id);
+                commandCategories.ExecuteNonQuery();
+
+                var commandHate = new MySqlCommand("DELETE FROM hate WHERE id = @Id", conn, transaction);
+                commandHate.Parameters.AddWithValue("@Id", id);
+                commandHate.ExecuteNonQuery();
+
+                transaction.Commit();
+            }
+        }
+
         public HateStats GetStats()
         {
             using (var conn = Connection)

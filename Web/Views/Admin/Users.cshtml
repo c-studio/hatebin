@@ -23,7 +23,7 @@
                     <td>
                         <form method="POST">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="UserId" value="@user.Id"/>
+                            <input type="hidden" name="UpdateUserId" value="@user.Id"/>
                             <input type="hidden" name="Role" value="Approved"/>
                             @if (user.Roles.Contains("Approved"))
                             {
@@ -38,7 +38,7 @@
                     <td>
                         <form method="POST">
                             @Html.AntiForgeryToken()
-                            <input type="hidden" name="UserId" value="@user.Id"/>
+                            <input type="hidden" name="UpdateUserId" value="@user.Id"/>
                             <input type="hidden" name="Role" value="Admin"/>
                             @if (user.Roles.Contains("Admin"))
                             {
@@ -56,7 +56,7 @@
         </table>
         @if (Model.ShowPrev)
         {
-            <a href="~/Admin/Users/@Model.UserList.First().Id?dir=1">Föregående Sida</a>
+            <a href="~/Admin/Users?userid=@Model.UserList.First().Id?dir=1">Föregående Sida</a>
         }
         @if (Model.ShowPrev && Model.ShowNext)
         {
@@ -64,7 +64,7 @@
         }
         @if (Model.ShowNext)
         {
-            <a href="~/Admin/Users/@Model.UserList.Last().Id">Nästa Sida</a>
+            <a href="~/Admin/Users?userid=@Model.UserList.Last().Id">Nästa Sida</a>
         }
     </div>
 </div>

@@ -18,35 +18,51 @@ $(function() {
                 $("#hatebin-netlove-container").removeClass("hatebin-hidden");
                 $("#hatebin-loggedin").removeClass("hatebin-hidden");
                 $("#hatebin-loggedout").addClass("hatebin-hidden");
+                $("#hatebin-name-span").text(userdata.Name);
             } else {
                 userdata = null;
                 $("#hatebin-netlove-container").addClass("hatebin-hidden");
                 $("#hatebin-loggedin").addClass("hatebin-hidden");
                 $("#hatebin-loggedout").removeClass("hatebin-hidden");
+                $("#hatebin-name-span").text("");
             }
         });
-        setTimeout(checkloginstatus, 10000);
+        setTimeout(checkloginstatus, 5000);
     }
-     
-    checkloginstatus();
-         
+                   
     $.get(chrome.extension.getURL('html/modal.html'), function(data) {
         $($.parseHTML(data)).appendTo('body');
        appendImage("images/hatebin_logo_nobg.png", "hatebin-modal-logo", "logoImageHolder1");
         $(".close-reveal-modal").on("click", function() {
             $('#hatebinModalFirst').foundation('reveal', 'close');
-        });       
+        });      
+        $("#checkbox-netlove").on("click", function(event){
+            if(event.currentTarget.checked) {
+                $("#input-netlove-reason").prop('disabled', false);
+            } else {
+                $("#input-netlove-reason").prop('disabled', true);
+            }
+        });              
+        $("#checkbox-other-hate").on("click", function(event){
+            if(event.currentTarget.checked) {
+                $("#input-other-hate").prop('disabled', false);
+            } else {
+                $("#input-other-hate").prop('disabled', true);
+            }
+        });               
+        checkloginstatus();      
     });
         
     var clickHandlerActive = false;
     
-    var tweetClickHandler = function(tweetClickEvent) {
+    var tweetClickHandler = function(event) {
+        event.stopPropagation();                                    
                                      
-        var id = $(tweetClickEvent.currentTarget).data("item-id"); 
+        var id = $(event.currentTarget).data("item-id"); 
         var tweetData = {
             id: id,
-            author: $("[data-item-id='"+id+"']", tweetClickEvent.currentTarget).data("screen-name"),
-            text: $(".tweet-text", tweetClickEvent.currentTarget).text()
+            author: $("[data-item-id='"+id+"']", event.currentTarget).data("screen-name"),
+            text: $(".tweet-text", event.currentTarget).text()
         }
                              
         $("[data-item-type='tweet']").removeClass("trash-open-cursor ").off("click", tweetClickHandler);
@@ -61,15 +77,15 @@ $(function() {
         $("#checkbox-other-hate").prop('checked', false);
         $("#checkbox-netlove").prop('checked', false);
         $("#input-other-hate").val("");
-        $("#input-love-e-mail").val("");
-        $("#input-love-reason").val("");
-        $("input-netlove-reason").val("")
+        $("#input-other-hate").prop('disabled', true);
+        $("#input-netlove-reason").val("")
+        $("#input-netlove-reason").prop('disabled', true);
                  
         $(".hatebin-tweet-content").text(tweetData.text);
                 
         $("#hatebinThrowButton").off();
         $("#hatebinThrowButton").on("click", function() {
-            $(tweetClickEvent.currentTarget).remove();
+            $(event.currentTarget).remove();
             $('#hatebinModalFirst').foundation('reveal', 'close');
                               
             var hateData = {
@@ -118,7 +134,7 @@ $(function() {
         });            
     }   
     
-    $(".hatebin-logo").click(function(){       
+    $(".hatebin-logo").click(function(){      
         if(!clickHandlerActive) {
             $("[data-item-type='tweet']").addClass("trash-open-cursor").on("click", tweetClickHandler);
             $("body").addClass("trash-closed-cursor");
